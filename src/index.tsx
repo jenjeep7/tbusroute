@@ -8,15 +8,17 @@ import { Provider } from "react-redux";
 
 import "./theme.scss";
 import initialState from "./store/reducers/initialState";
-import { getProviders } from "./store/actions/routeActions";
+import { getProviders, getRoutes } from "./store/actions/routeActions";
 
 
 
 const renderApp = async () => {
   const existingProviders = await getProviders();
+  const existingRoutes = await getRoutes();
 
   const state = Object.assign({}, initialState, {
-    providers: existingProviders
+    providers: existingProviders,
+    routes: existingRoutes
   })
   
   const store = configureStore(state);

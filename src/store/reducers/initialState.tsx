@@ -1,10 +1,12 @@
-import { Providers } from "../../api/BusRouteService";
+import { Providers, Routes } from "../../api/BusRouteService";
 
 export interface InitialState {
     providers: Providers[];
+    routes: Routes[]
 }
 
 export default {
-    providers: []
+    providers: [],
+    routes: []
 }
 

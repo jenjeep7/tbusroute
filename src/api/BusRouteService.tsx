@@ -8,7 +8,13 @@ export interface IBusRouteService {
 export interface Providers {
     agency_id: number,
     agency_name: string
-}
+};
+
+export interface Routes {
+    route_id: string,
+    agency_id: number,
+    route_label: string
+};
 
 const getRoute = async () => {
 
@@ -16,17 +22,6 @@ const getRoute = async () => {
     
 };
 
-// export const getProviders = () => async (dispatch: any) => {
-//     const response = await window.fetch('https://svc.metrotransit.org/nextripv2/agencies');
-//     const {data, errors} = await response.json()
-
-//     if(response.ok) {
-        
-//         return data;
-//     } else {
-//         // return Promise.reject(errors);
-//     }
-// }
 
 const BusRouteService: IBusRouteService = {
     getRoute,

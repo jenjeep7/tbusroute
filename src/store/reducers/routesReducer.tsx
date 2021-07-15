@@ -1,6 +1,6 @@
 import * as types from "../actions/actionTypes";
 import initialState from "./initialState";
-import { ProviderAction } from "../actions/routeActions";
+import { ProviderAction, RoutesAction } from "../actions/routeActions";
 
 
 export interface Providers {
@@ -8,15 +8,33 @@ export interface Providers {
 	agency_name: string
 };
 
+export interface Routes {
+    route_id: string,
+    agency_id: number,
+    route_label: string
+};
 
 
-export default function providerReducer(
+
+export  function providerReducer(
 	state: Providers[] = initialState.providers,
 	action: ProviderAction
 ): Providers[] {
 	switch (action.type) {
-		case types.ALL_PPROVIDERS:
+		case types.ALL_PROVIDERS:
 			return [...action.providers];
+		default:
+			return state;
+	}
+}
+
+export  function routesReducer(
+	state: Routes[] = initialState.routes,
+	action: RoutesAction
+): Routes[] {
+	switch (action.type) {
+		case types.ALL_ROUTES:
+			return [...action.routes];
 		default:
 			return state;
 	}

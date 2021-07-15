@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import providerReducer from "./routesReducer";
-import initialState from "./initialState";
+import {providerReducer, routesReducer} from "./routesReducer";
 
 const appReducer = combineReducers({
-    providers: providerReducer
+    providers: providerReducer,
+	routes: routesReducer
 })
 
 
