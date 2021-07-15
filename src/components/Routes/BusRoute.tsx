@@ -1,11 +1,10 @@
-import { dir } from "console";
-import { getegid } from "process";
+
 import * as React from 'react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { Providers, Routes } from "../../api/BusRouteService";
-import { getAllDirections, getAllStops } from "../../store/actions/routeActions";
+import { getAllDirections, getAllStops, getStopInformation, StopInfo } from "../../store/actions/routeActions";
 import { InitialState } from "../../store/reducers/initialState";
 import { Directions } from "../../store/reducers/routesReducer";
 import BusStops from "./BusStops";
@@ -21,6 +20,7 @@ const BusRoute = ({ providers, routes }: BusRouteProps) => {
     const [selectedRouteId, setSelectedRoute] = useState("");
     const [directions, setDirections] = useState<Directions[]>();
     const [selectedStops, setSelectedStops ] = useState();
+    const [stopInfo, setStopInfo] = useState<StopInfo>();
 
     const getDirections = async (routeId: string) => {
         await getAllDirections(routeId).then(d => setDirections(d));
@@ -37,6 +37,14 @@ const BusRoute = ({ providers, routes }: BusRouteProps) => {
     const getStops = async (directionId: string) => {
       await getAllStops(selectedRouteId, directionId).then(s => setSelectedStops(s));
     };
+
+    const getStopDetails = async (stopId: string) => {
+      const directionSelect = document.getElementById('directions') as HTMLSelectElement;
+      const directionId = directionSelect.value;
+      await getStopInformation(selectedRouteId, directionId, stopId).then(i => {
+        setStopInfo(i);
+      });
+    }
     
 
     // useEffect(() => {
@@ -59,24 +67,26 @@ const BusRoute = ({ providers, routes }: BusRouteProps) => {
         <option></option>
           {providers.map((p) => <option key={p.agency_id}>{p.agency_name}</option>)}
       </select> */}
-      <label htmlFor="routes">Routes</label>
-      <select name="routes" onChange={e => getDirections(e.target.value)}>
-        <option></option>
-          {routes.map((r) => <option key={r.route_id} value={r.route_id}>{r.route_label}</option>)}
-      </select>
+      <div className="form-group">
+        <label htmlFor="routes">Routes</label>
+        <select name="routes" onChange={e => getDirections(e.target.value)}>
+          <option></option>
+            {routes.map((r) => <option key={r.route_id} value={r.route_id}>{r.route_label}</option>)}
+        </select>
+      </div>
 
       {selectedRouteId && directions && (
-        <>
-        <label htmlFor="directions">Directions</label>
+        <div className="form-group">
+          <label htmlFor="directions">Directions</label>
 
-        <select name="directions" id="directions" onChange={e => getStops(e.target.value)}>
-          <option></option>
-          {directions?.map((d) => <option key={d.direction_id} value={d.direction_id}>{d.direction_name}</option>)}
-        </select>
-      </>
+          <select name="directions" id="directions" onChange={e => getStops(e.target.value)}>
+            <option></option>
+            {directions?.map((d) => <option key={d.direction_id} value={d.direction_id}>{d.direction_name}</option>)}
+          </select>
+        </div>
       )}
 
-      {selectedStops  && <BusStops stops={selectedStops}/>}
+      {selectedStops  && <BusStops stops={selectedStops}  stopInfo={stopInfo} onClick={(stopID) => getStopDetails(stopID)}/>}
     </div>
         
     </>

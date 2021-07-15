@@ -1,6 +1,7 @@
 :root {
     background-image: url('./assets/busbackground.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
     text-align: center;
 }
 
@@ -17,4 +18,13 @@ a {
     color: white;
     text-align: right;
     margin-right: 24px;
+}
+
+li {
+    list-style-type: none;
+}
+
+#departureText {
+    color: white;
+    font-size: 30px;
 }

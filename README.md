@@ -1,6 +1,13 @@
 # Bus Route App
 
-This is a sample project
+This is a sample project created using the React CLI with a template type of TypeScript.
+This app utilizes the Metro Transit API to display a list of stops when a user selects a route.
+The user can then click on a selected stop to display the next departure.
+
+## `App Installation`
+
+Clone repository and open project folder.
+Run npm install to install packages.
 
 ### `npm start`
 
@@ -35,4 +42,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+
+### `Developer Notes`
 
