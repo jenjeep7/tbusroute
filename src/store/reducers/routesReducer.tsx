@@ -14,6 +14,11 @@ export interface Routes {
     route_label: string
 };
 
+export interface Directions {
+	direction_id: number,
+	direction_name: string
+};
+
 
 
 export  function providerReducer(
@@ -26,7 +31,7 @@ export  function providerReducer(
 		default:
 			return state;
 	}
-}
+};
 
 export  function routesReducer(
 	state: Routes[] = initialState.routes,
