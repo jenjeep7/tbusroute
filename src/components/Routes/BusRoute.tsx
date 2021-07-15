@@ -1,17 +1,34 @@
 import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
+import { Providers } from "../../api/BusRouteService";
+import { InitialState } from "../../store/reducers/initialState";
 
 
-interface Props extends RouteComponentProps {}
+interface BusRouteProps  {
+    providers: Providers[]
+}
 
-const BusRoute = ({ history }: Props) => {
+const BusRoute = ({ providers }: BusRouteProps) => {
+
+
   return (
+      <>
     <div>
-      <p onClick={history.goBack}>Previous Page</p>
-      <Link to="/">Top</Link>
+      {/* <p onClick={}>Previous Page</p> */}
+      <Link to="/">Home</Link>
       <h1>Bus Route</h1>
+    <label htmlFor="provider">Provider</label>
+      <select name="provider">
+          {providers.map((p) => <option key={p.agency_id}>{p.agency_name}</option>)}
+      </select>
     </div>
+        
+    </>
   );
 };
-
-export default BusRoute;
+export const mapDispatchToProps = {};
+export const mapStateToProps = ({providers}: InitialState) => ({
+    providers
+});
+export default connect(mapStateToProps, mapDispatchToProps)(BusRoute);
