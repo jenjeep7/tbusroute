@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { Providers, Routes } from "../../api/BusRouteService";
 import { getAllDirections, getAllStops, getStopInformation, StopInfo } from "../../store/actions/routeActions";
-import { InitialState } from "../../store/reducers/initialState";
+import initialState, { InitialState } from "../../store/reducers/initialState";
 import { Directions } from "../../store/reducers/routesReducer";
 import BusStops from "./BusStops";
 
@@ -15,7 +15,7 @@ interface BusRouteProps  {
     routes: Routes[]
 }
 
-const BusRoute = ({ providers, routes }: BusRouteProps) => {
+const BusRoute = ({ routes }: BusRouteProps) => {
 
     const [selectedRouteId, setSelectedRoute] = useState("");
     const [directions, setDirections] = useState<Directions[]>();
@@ -30,6 +30,7 @@ const BusRoute = ({ providers, routes }: BusRouteProps) => {
           const directionId = directionSelect.value;
 
           await getAllStops(routeId, directionId).then(s => setSelectedStops(s));
+
         }
 
     };

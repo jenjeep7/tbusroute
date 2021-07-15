@@ -1,14 +1,22 @@
-:root {
+body {
     background-image: url('./assets/busbackground.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
+
+    select {
+        height: 30px;
+        font-size: 18px;
+        margin: 8px;
+    }
 }
 
 label {
     color: white;
     padding-right: 8px;
     margin-left: 8px;
+    font-size:18px;
+    font-weight: bold;
 }
 a {
     color: white;
@@ -26,5 +34,13 @@ li {
 
 #departureText {
     color: white;
-    font-size: 30px;
+    font-size: 24px;
+}
+
+.stops:hover {
+    cursor: pointer;
+}
+
+.selectedStop {
+    color: yellow;
 }

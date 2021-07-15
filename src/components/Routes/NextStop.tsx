@@ -13,7 +13,7 @@ const NextStop = ({
 console.log(stopInfo)
     return (
         <>
-       <span id="departureText">Next departure from {stopInfo?.stops[0].description} is in {stopInfo?.departures[0].departure_text} minutes</span>
+       <span id="departureText">Next departure from {stopInfo?.stops[0].description} {stopInfo?.departures[0].description} is in {stopInfo?.departures[0].departure_text} minutes</span>
         </>
     )
 }
