@@ -1,14 +1,17 @@
+//This Stylesheet is for any themeing/styling that applies
+
 body {
     background-image: url('./assets/busbackground.jpg');
-    background-size: cover;
+    background-size: cover; 
     background-repeat: no-repeat;
-    text-align: center;
-
     select {
         height: 30px;
         font-size: 18px;
         margin: 8px;
     }
+   
+    color: white;
+    
 }
 
 label {
@@ -18,29 +21,44 @@ label {
     font-size:18px;
     font-weight: bold;
 }
+
 a {
     color: white;
     text-decoration: none;
 }
-#myRoutes {
-    color: white;
-    text-align: right;
-    margin-right: 24px;
-}
+
 
 li {
     list-style-type: none;
 }
 
-#departureText {
-    color: white;
-    font-size: 24px;
+#toolbar {
+    button {
+    margin: 8px;
+	box-shadow: 0px 4px 14px -7px #276873;
+	background:linear-gradient(to bottom, #042e78 5%, #317e91 100%);
+	background-color:#042e78;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:7px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+    }
+    button:hover {
+    background:linear-gradient(to bottom, #317e91 5%, #042e78 100%);
+    background-color:#317e91; 
+    }
+    h1 {
+        text-align: center;
+        margin: 0 0 24px 0;
+    }
+
 }
 
-.stops:hover {
-    cursor: pointer;
-}
 
-.selectedStop {
-    color: yellow;
-}
+

@@ -2,17 +2,19 @@
 import * as React from 'react';
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
 import { Providers, Routes } from "../../api/BusRouteService";
 import { getAllDirections, getAllStops, getStopInformation, StopInfo } from "../../store/actions/routeActions";
-import initialState, { InitialState } from "../../store/reducers/initialState";
+import { InitialState } from "../../store/reducers/initialState";
 import { Directions } from "../../store/reducers/routesReducer";
+import ToolBar from "../Toolbar";
 import BusStops from "./BusStops";
+import NextStop from "./NextStop";
+import "./Routes.scss";
 
 
 interface BusRouteProps  {
     providers: Providers[],
-    routes: Routes[]
+    routes: Routes[],
 }
 
 const BusRoute = ({ routes }: BusRouteProps) => {
@@ -22,21 +24,29 @@ const BusRoute = ({ routes }: BusRouteProps) => {
     const [selectedStops, setSelectedStops ] = useState();
     const [stopInfo, setStopInfo] = useState<StopInfo>();
 
-    const getDirections = async (routeId: string) => {
-        await getAllDirections(routeId).then(d => setDirections(d));
+    const onSelectRoute = async (routeId: string) => {
+      if(routeId) {
+
         setSelectedRoute(routeId);
-        if(directions) {
-          const directionSelect = document.getElementById('directions') as HTMLSelectElement;
-          const directionId = directionSelect.value;
+        await getAllDirections(routeId).then(d => setDirections(d)).catch(e => console.log(e));
 
-          await getAllStops(routeId, directionId).then(s => setSelectedStops(s));
+        //if user changes routes clear out stops and reset directions dropdonwn
 
-        }
+        setSelectedStops(null);
+        const directionSelect = document.getElementById('directions') as HTMLSelectElement;
+        directionSelect.value = "";
+      }
 
+      else {
+       //handle if the user deselects any routes
+        setDirections(null);
+        setSelectedStops(null);
+      }
     };
 
     const getStops = async (directionId: string) => {
       await getAllStops(selectedRouteId, directionId).then(s => setSelectedStops(s));
+      setStopInfo(null);
     };
 
     const getStopDetails = async (stopId: string) => {
@@ -58,44 +68,51 @@ const BusRoute = ({ routes }: BusRouteProps) => {
     
 
   return (
-      <>
-    <div>
-      {/* <p onClick={}>Previous Page</p> */}
-      <Link to="/">Home</Link>
-      <h1 style={{color: "white"}}>Bus Route</h1>
-    {/* <label htmlFor="provider">Provider</label>
-      <select name="provider">
-        <option></option>
-          {providers.map((p) => <option key={p.agency_id}>{p.agency_name}</option>)}
-      </select> */}
-      <div className="form-group">
-        <label htmlFor="routes">Routes</label>
-        <select name="routes" onChange={e => getDirections(e.target.value)}>
+    <>
+      <div> 
+             
+        <ToolBar />
+
+      {/* <label htmlFor="provider">Provider</label>
+        <select name="provider">
           <option></option>
-            {routes.map((r) => <option key={r.route_id} value={r.route_id}>{r.route_label}</option>)}
-        </select>
-      </div>
+            {providers.map((p) => <option key={p.agency_id}>{p.agency_name}</option>)}
+        </select> */}
 
-      {selectedRouteId && directions && (
-        <div className="form-group">
-          <label htmlFor="directions">Directions</label>
+        <div  id="routeContainer">
+          <div className="form-group dropdown" id="routeGroup">
+            <label htmlFor="routeSelect">Routes</label>
+            <select className="dropdown-select" id="routeSelect" name="routes" onChange={e => onSelectRoute(e.target.value)}>
+              <option></option>
+                {routes.map((r) => <option key={r.route_id} value={r.route_id}>{r.route_label}</option>)}
+            </select>
+          </div>
 
-          <select name="directions" id="directions" onChange={e => getStops(e.target.value)}>
-            <option></option>
-            {directions?.map((d) => <option key={d.direction_id} value={d.direction_id}>{d.direction_name}</option>)}
-          </select>
+          {selectedRouteId && directions && (
+            <div className="form-group dropdown">
+              <label htmlFor="directions">Directions</label>
+
+              <select  className={"dropdown-select"} name="directions" id="directions" onChange={e => getStops(e.target.value)}>
+                <option></option>
+                {directions.map((d) => <option key={d.direction_id} value={d.direction_id}>{d.direction_name}</option>)}
+              </select>
+            </div>
+          )}
+            {stopInfo&&  <NextStop stopInfo={stopInfo} />}
+
         </div>
-      )}
-
-      {selectedStops  && <BusStops stops={selectedStops}  stopInfo={stopInfo} onClick={(stopID) => getStopDetails(stopID)}/>}
-    </div>
-        
+        {selectedStops  && <BusStops stops={selectedStops} onClick={(stopID) => getStopDetails(stopID)}/>}
+      </div>          
     </>
   );
 };
+
 export const mapDispatchToProps = {};
 export const mapStateToProps = ({providers, routes}: InitialState) => ({
     providers,
     routes
 });
 export default connect(mapStateToProps, mapDispatchToProps)(BusRoute);
+
+//export unconnected for testing
+export { BusRoute };

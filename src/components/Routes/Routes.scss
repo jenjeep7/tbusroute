@@ -1,0 +1,25 @@
+//This is styling unique to Routes components
+
+#myRoutes {
+    color: white;
+    margin-right: 24px;
+}
+
+#departureText {
+    color: white;
+    font-size: 24px;
+}
+
+.stops:hover {
+    cursor: pointer;
+}
+
+.selectedStop {
+    color: yellow;
+}
+
+#routeContainer {
+   
+    text-align: center;
+    padding: 24px;
+}

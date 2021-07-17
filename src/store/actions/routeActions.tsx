@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { Directions, Providers, Routes } from "../reducers/routesReducer";
 import { ALL_PROVIDERS } from "./actionTypes";
 
@@ -112,4 +113,9 @@ export const getStopInformation = async (routeid: string, direction: string, sto
     catch(error) {
         throw error;
     };
+};
+
+export default {
+    getAllDirections,
+    getAllStops
 };

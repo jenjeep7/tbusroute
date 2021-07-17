@@ -1,18 +1,15 @@
 import * as React from 'react';
 import { useState } from "react";
-import { StopInfo, Stops } from "../../store/actions/routeActions";
-import NextStop from "./NextStop";
+import { Stops } from "../../store/actions/routeActions";
 
 export interface BusStopsProps {
     stops?: Stops[],
     onClick: (s: string) => void;
-    stopInfo?: StopInfo
 };
 
 const BusStops = ({
     stops,
     onClick,
-    stopInfo
 }: BusStopsProps) => {
 
     const [selectedStop, setSelectedStop ] = useState("");
@@ -31,18 +28,17 @@ const BusStops = ({
     }
 
     return (
-        <>
-        <h2>Select Stop</h2>
-        <p>What is your desired stop?  Click a destination.</p>
-        {stopInfo&&  <NextStop stopInfo={stopInfo} />}
+        <div style={{marginLeft: "8px"}}>
+            <h2>Select Stop</h2>
+            <p>What is your desired stop?  Click a destination.</p>
 
-        <li id="myRoutes">
-            {stops?.map((s) => (            
-                <ul className={getClassName(s.place_code)}key={s.place_code} onClick={() => onClickStop(s.place_code)}><span>{s.description}</span></ul>
-            ))}
-        </li>
+            <li id="myRoutes">
+                {stops?.map((s) => (            
+                    <ul className={getClassName(s.place_code)}key={s.place_code} onClick={() => onClickStop(s.place_code)}><span>{s.description}</span></ul>
+                ))}
+            </li>
 
-        </>
+        </div>
     )
 };
 
