@@ -41,6 +41,7 @@ const BusRoute = ({ routes }: BusRouteProps) => {
        //handle if the user deselects any routes
         setDirections(null);
         setSelectedStops(null);
+        setStopInfo(null);
       }
     };
 
