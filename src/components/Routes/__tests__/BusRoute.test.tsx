@@ -1,17 +1,17 @@
-import React from 'react';
-import { fireEvent, render} from '@testing-library/react';
-import { BusRoute }from '../BusRoute';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import { BusRoute } from "../BusRoute";
 //import routeActions from "../../../store/actions/routeActions";
 
 const mockDirections = [
-  {
-    direction_id: 2,
-    direction_name: "West"
-  },
-  {
-    direction_id: 3,
-    direction_name: "North"
-  }
+    {
+        direction_id: 2,
+        direction_name: "West",
+    },
+    {
+        direction_id: 3,
+        direction_name: "North",
+    },
 ];
 
 const mockBusStops = jest.fn((props: any) => <div />);
@@ -21,70 +21,58 @@ jest.mock("../BusStops", () => (props: any) => mockBusStops(props));
 // jest.spyOn(routeActions, 'getAllDirections').mockImplementation(mockGetdirections);
 
 jest.mock("../../../store/actions/routeActions", () => ({
-  getAllDirections: jest.fn().mockImplementation(() => async () => mockDirections)
-}))
-
-
+    getAllDirections: jest
+        .fn()
+        .mockImplementation(() => async () => mockDirections),
+}));
 
 const mockRoutes = [
-  {
-    route_id: "1",
-    agency_id: "1",
-    route_label: "Cool Stadium"
-  },
-  {
-    route_id: "2",
-    agency_id: "2",
-    route_label: "The Mall"
-  }
+    {
+        route_id: "1",
+        agency_id: "1",
+        route_label: "Cool Stadium",
+    },
+    {
+        route_id: "2",
+        agency_id: "2",
+        route_label: "The Mall",
+    },
 ];
 
+describe("renders App Container", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
+    it("Render component without issues", () => {
+        renderComponent({ routes: mockRoutes });
+    });
 
+    it("Routes dropdown is populated on pageload", async () => {
+        const { getByText } = renderComponent({ routes: mockRoutes });
 
-describe('renders App Container', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  })
+        const routelabel = getByText("Routes");
+        expect(routelabel).toBeInTheDocument();
 
-  it("Render component without issues", () => {
-    renderComponent({routes: mockRoutes}); 
-  });
+        const options = document.getElementsByTagName("option");
+        expect(options.length).toBe(3);
+    });
 
-  it("Routes dropdown is populated on pageload", async  () => {
+    it("Directions get populated when route is selected", async () => {
+        renderComponent({ routes: mockRoutes });
 
-    const { getByText } = renderComponent({routes: mockRoutes}); 
+        const routeSelect = document.getElementById("routeSelect");
+        await fireEvent.change(routeSelect, { target: { value: "2" } });
 
-    const routelabel = getByText('Routes');
-    expect(routelabel).toBeInTheDocument();
-
-    const options = document.getElementsByTagName('option');
-    expect(options.length).toBe(3);
-
-    
-    
-  });
-
-  it("Directions get populated when route is selected", async () => {
-
-    renderComponent({routes: mockRoutes});
-
-    const routeSelect = document.getElementById('routeSelect');
-    await fireEvent.change(routeSelect, { target: {value: "2"}});
-
-
-    const directionSelect = document.getElementById('directions') as HTMLElement;
-
-  })
+        const directionSelect = document.getElementById(
+            "directions"
+        ) as HTMLElement;
+    });
 });
 
-
-  
 const renderComponent = (props: any = {}) => {
     return render(<BusRoute {...props} />);
 };
-
-
 
 //To Test
 //When page loads is route dropdown populated?

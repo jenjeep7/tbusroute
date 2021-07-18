@@ -6,16 +6,11 @@
             "type": "node",
             "request": "launch",
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-            "args": [
-                "test",
-                "--runInBand",
-                "--no-cache",
-                "BusRoute.test.tsx"
-            ],
+            "args": ["test", "--runInBand", "--no-cache", "NextStop.test.tsx"],
             "cwd": "${workspaceRoot}",
             "protocol": "inspector",
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }
