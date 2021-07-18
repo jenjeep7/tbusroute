@@ -15,7 +15,7 @@ const BusStops = ({ stops, onClick }: BusStopsProps) => {
         setSelectedStop(place_code);
     };
 
-    const getClassName = (code) => {
+    const getClassName = (code: string) => {
         if (code === selectedStop) {
             return "selectedStop";
         } else {

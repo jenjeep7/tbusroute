@@ -16,7 +16,16 @@
 }
 
 .selectedStop {
-    color: yellow;
+    color: rgb(165, 195, 241);
+        span:before {
+            background-image: url('../../assets/icons8-bus-50.png');
+            background-size: 18px 28px;
+            height: 18px;
+            width: 18px;
+            display: inline-block;
+            content: "";
+            margin-right: 8px;
+        }
 }
 
 #routeContainer {
