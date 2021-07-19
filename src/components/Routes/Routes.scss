@@ -16,12 +16,12 @@
 }
 
 .selectedStop {
-    color: rgb(165, 195, 241);
+    color: rgb(97, 194, 251);
         span:before {
-            background-image: url('../../assets/icons8-bus-50.png');
-            background-size: 18px 28px;
-            height: 18px;
-            width: 18px;
+            background-image: url('../../assets/icons8-shuttle-50.png');
+            background-size: 20px 20px;
+            height: 20px;
+            width: 20px;
             display: inline-block;
             content: "";
             margin-right: 8px;
